@@ -1,0 +1,23 @@
+{
+  "name": "mc_realtime",
+  "version": "0.0.2",
+  "description": "realtime updates for solid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melvincarvalho/realtime.git"
+  },
+  "keywords": [
+    "solid",
+    "realtime"
+  ],
+  "author": "Melvin Carvalho <melvincarvalho@gmail.com> (https://melvincarvalho.com/#me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/melvincarvalho/realtime/issues"
+  },
+  "homepage": "https://github.com/melvincarvalho/realtime#readme"
+}
