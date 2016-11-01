@@ -94,7 +94,10 @@
     var content = document.getElementById('content')
     content = $('#content')
     var str = ''
-    str += UI.model.toString()
+    for (var i = 0; i < UI.model.length; i++) {
+      var st = UI.model[i]
+      str += st.toString() + '\n'
+    }
     content.text(str)
   }
 

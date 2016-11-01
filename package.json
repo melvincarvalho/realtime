@@ -1,6 +1,6 @@
 {
   "name": "mc_realtime",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "realtime updates for solid",
   "main": "index.js",
   "scripts": {
