@@ -49,7 +49,11 @@
       </div>
       <div class="card-block">
 
-        <div id="container">
+        <form id="form" method="GET" style="display:none">
+          <input id="uri" type="input" name="uri" placeholder="Enter a URI">
+        </form>
+
+        <div>
           <pre id="content">
           </pre>
         </div>
@@ -63,17 +67,9 @@
 
   </div>
 
-
-
   <script>
-
-  // defaults
-  //
-
   // globals
   var uri = getParam('uri')
-
-  var template
 
   var UI = {
     store : {
@@ -87,24 +83,22 @@
   var fetchURI, f, g, u
 
   /**
-   * Initialize UI
-   */
+  * Initialize UI
+  */
   function init() {
     UI.store.rdf     = $rdf
     UI.store.store   = UI.store.rdf.graph()
     UI.store.fetcher = UI.store.rdf.fetcher(UI.store.store)
     UI.store.updater = new UI.store.rdf.UpdateManager(UI.store.store)
     UI.model = {}
-
-    template = UI.model
   }
 
   // utils
   /**
-   * Get parameters from query string
-   * @param  {string} name Name of parameter
-   * @return {String}      Value of parameter
-   */
+  * Get parameters from query string
+  * @param  {string} name Name of parameter
+  * @return {String}      Value of parameter
+  */
   function getParam(name) {
     name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]")
     var regexS = "[\\?&]"+name+"=([^&#]*)"
@@ -118,27 +112,9 @@
   }
 
   /**
-   * Get the value or uri from an object
-   * @param  {object} g And rdflib graph object
-   * @param  {string} s And rdflib subject
-   * @param  {string} p Predicate as a string
-   * @return {string}   The value of the object or null
-   */
-  function anyObj(g, s, p) {
-    var obj
-    obj = g.any(s, $rdf.sym(p))
-    if (obj && obj.uri) {
-      return obj.uri
-    }
-    if (obj && obj.value) {
-      return obj.value
-    }
-  }
-
-  /**
-   * Creates a light gallery
-   * @param  {object} el The element to use
-   */
+  * Creates a light gallery
+  * @param  {object} el The element to use
+  */
   function render(el) {
     console.log('rendering')
     var content = document.getElementById('content')
@@ -152,55 +128,51 @@
   }
 
   /**
-  * Refresh slides
+  * Refresh
   */
   function refresh() {
-
     UI.store.updater.reload(UI.store.store, doc = $rdf.sym(uri), processGraph)
-
   }
 
   /**
-   * Process a graph and gets playlist material
-   * @param  {number} ok   Return code
-   * @param  {string} body Body of return
-   */
+  * Process a graph and gets playlist material
+  * @param  {number} ok   Return code
+  * @param  {string} body Body of return
+  */
   function processGraph(ok, body) {
     var st = UI.store.store.statementsMatching(null, null, null, $rdf.sym(uri))
     UI.model = st
     render()
   }
 
-
-  /**
-   * Startup functions
-   */
-  $(function() {
-  })
-
-
-  //main
-  init()
-  create(uri)
-  console.log('uri', uri)
-  console.log('$rdf.sym(uri)', $rdf.sym(uri))
-
   /**
   * creates slides
   * @return {[type]} [description]
   */
   function create(uri) {
-
     UI.store.fetcher.requestURI(uri , undefined, true, processGraph)
-
   }
 
+  /**
+  * Startup functions
+  */
+  $(function() {
+    init()
 
-  setTimeout(function() {
-    UI.store.updater.setRefreshHandler($rdf.sym(uri), function(doc) {
-      refresh()
-    })
-  }, 2000)
+    if (uri) {
+      create(uri)
+      console.log('uri', uri)
+      setTimeout(function() {
+        UI.store.updater.setRefreshHandler($rdf.sym(uri), function(doc) {
+          refresh()
+        })
+      }, 2000)
+    } else {
+      console.log('need input box')
+      $('#form').show()
+    }
+
+  })
 
   </script>
 </body>
