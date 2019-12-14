@@ -1,5 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/melvincarvalho/realtime.png?label=ready&title=Ready)](https://waffle.io/melvincarvalho/realtime)
-
 # realtime
 
 A simple test page that allows you to explore a solid file with realtime updates.
